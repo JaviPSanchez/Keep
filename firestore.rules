@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /facturas/{document=**} {
+      // allow read, write (update, create, and delete);
+      // allow read, create, delete, update;
+      //If a user is not login, it will be null, so he could not create
+      allow create: if request.auth != null;
+      // resource es el documento que queremos acceder. Solo uid iguales a la autenticada puede leer o borrar
+      allow read, delete, update: if request.auth.uid == resource.data.uid;
+    }
+    match /users/{document=**} {
+      allow read, create, delete;
+    }
+  }
+}

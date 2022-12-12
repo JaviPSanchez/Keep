@@ -12,5 +12,8 @@ service cloud.firestore {
     match /users/{document=**} {
       allow read, create, delete;
     }
+    match /notifications/{document=**} {
+      allow read, create, delete;
+    }
   }
 }
